@@ -1,0 +1,106 @@
+apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+apply plugin: 'org.greenrobot.greendao'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdk
+    buildToolsVersion rootProject.ext.buildTools
+
+    defaultConfig {
+        applicationId "com.zzh.common.mvpdemo"
+        minSdkVersion rootProject.ext.minSdk
+        targetSdkVersion rootProject.ext.targetSdk
+        versionCode 1
+        versionName "0.0.1"
+    }
+
+    signingConfigs {
+        release {
+            try {
+                storeFile file("./mvpdemo.jks")
+                storePassword "123456"
+                keyAlias "mvp"
+                keyPassword "123456"
+            } catch (ex) {
+                throw new InvalidUserDataException(ex.toString())
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile "com.android.support:appcompat-v7:${rootProject.ext.support}"
+    compile "com.android.support:recyclerview-v7:${rootProject.ext.support}"
+    compile "com.android.support:cardview-v7:${rootProject.ext.support}"
+    compile "com.android.support:support-v4:${rootProject.ext.support}"
+    compile "com.android.support:design:${rootProject.ext.support}"
+    testCompile 'junit:junit:4.12'
+    // leakcanary
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    // retrofit
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    // butterknife
+    apt 'com.jakewharton:butterknife-compiler:8.2.1'
+    compile 'com.jakewharton:butterknife:8.2.1'
+    // rxjava
+    compile 'io.reactivex:rxjava:1.1.9'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+    compile 'com.trello:rxlifecycle:1.0'
+    compile 'com.trello:rxlifecycle-components:1.0'
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.1@aar'
+    // logger
+    compile 'com.orhanobut:logger:1.15'
+
+    // dagger
+    apt 'com.google.dagger:dagger-compiler:2.6'
+    compile 'com.google.dagger:dagger:2.6'
+    // greendao
+    compile 'org.greenrobot:greendao:3.1.0'
+    // circleimageview
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    // slider
+    compile 'com.daimajia.slider:library:1.1.5'
+    // recyclerview-animators
+    compile 'jp.wasabeef:recyclerview-animators:2.2.3'
+    // dragsloplayout
+    compile 'com.github.Rukey7:DragSlopLayout:1.0.3'
+    // TagLayout
+    compile 'com.github.Rukey7:TagLayout:1.0.5'
+    // file picker
+    compile 'com.github.angads25:filepicker:1.0.6'
+    // Dialog
+    compile 'com.flyco.dialog:FlycoDialog_Lib:1.3.2@aar'
+    // Glide
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    // LabelView
+    compile 'com.flyco.labelview:FlycoLabelView_Lib:1.0.2@aar'
+    // tab layout
+    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.0@aar'
+    // shine button
+    compile 'com.sackcentury:shinebutton:0.1.6'
+    // progressbar
+    compile 'com.daimajia.numberprogressbar:library:1.2'
+
+    compile project(':downloaderLib')
+    compile project(':playerview')
+    compile project(':RecyclerViewHelper')
+    androidTestCompile 'junit:junit:4.12'
+}
